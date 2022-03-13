@@ -7,6 +7,7 @@
 	+ it should also be possible to override the error
 - Personal links "view ballot" doesn't always show the viewing judge's ballot (in case of multiple judges)
 - Can't submit a judge with `institution=None` via API
+- Ballot status chart doesn't show confirmed ballots (maybe only when using split ballots and merging?)
 
 ## Wishlist
 
