@@ -18,12 +18,20 @@ GM_registerMenuCommand('Make tables plain', () => plainTables(document), 'r');
  * WHERE TO RUN WHAT
  */
 
-reverseTitle();
+//reverseTitle();
 
-if (window.location.href.endsWith("/participants/eligibility/") || window.location.href.endsWith("/adjudicators/")) {
+if (window.location.href.endsWith("/participants/eligibility/")) {
 	addBatchToggler()
 }
 
+if (window.location.href.includes("/checkins/identifiers/print/")) {
+	addIdentifierExporter()
+}
+
+
+if (window.location.href.includes("/checkins/status/")) {
+	addCheckinClearer()
+}
 
 /*
  * ACTUAL CODE
@@ -33,8 +41,6 @@ if (window.location.href.endsWith("/participants/eligibility/") || window.locati
  * Reverse the title so they're more readable in short tabs that get truncated
  */
 function reverseTitle() {
-	if (window.location.href.includes("/database/"))
-		return;
 	let parts = document.title.split("|").map(s => s.trim());
 	parts.reverse();
 	document.title = parts.join(" | ")
@@ -45,8 +51,7 @@ function reverseTitle() {
  * Strip anything fancy out of a table so it's easier to copy-paste
  */
 function plainTables(el) {
-	//[...el.querySelectorAll("td")].forEach(e => e.innerHTML = e.children[0].textContent)
-	[...el.querySelectorAll("td")].forEach(e => e.innerHTML = e.querySelector("span").textContent)
+	[...el.querySelectorAll("td")].forEach(e => e.innerHTML = e.children[0].textContent)
 }
 
 /**
@@ -61,38 +66,57 @@ function addBatchToggler() {
 	  <textarea class="form-control" id="batch-toggle-list"></textarea>
 	  <div class="input-group-append" id="batch-toggle"><span class="input-group-text">GO</span></div>
 	</div>`;
+  
 	document.getElementById("batch-toggle").onclick = function(ev) {
-		let list = document.getElementById("batch-toggle-list").value.split("\n").map(s => s.trim());
-		console.debug(list);
-		let c = 0;
+	  let cat_num = 1;
+	  let list = document.getElementById("batch-toggle-list").value.split("\n").map(s => s.trim());
+	  console.debug(list);
+	  let c = 0;
 
-		let toClick = [];
-		for (let tr of document.querySelectorAll(".table tr")) {
-			let txt = tr.textContent.trim();
-			for (let name of list) {
-				console.log(txt);
-				let i = txt.indexOf(name);
-				if (i != -1) {
-					toClick.push(tr.querySelector("input[type=checkbox]"));
-					//list.splice(i,i);
-					break;
-				}
-			}
-		}
-		//alert("missing:" + list.join("\n"));
-		alert("Found:" + toClick.length)
-		let i = 0;
+	  for (let tr of document.querySelectorAll(".table tr")) {
+		  let i = list.indexOf(tr.children[0].textContent.trim());
+		  if (i > 0) {
+		  setTimeout( () => {
+			  tr.querySelectorAll("input[type=checkbox]")[cat_num].click();
+		  }, 100*c);
+		  list.splice(i,i);
+		  }
+	  }
 
-		function clickNext() {
-			toClick[i].click();
-			i++;
-			if (i < toClick.length)
-				setTimeout(clickNext, 500);
-			else
-				alert("Done!");
-		}
-		clickNext();
-
-
+	  alert("missing:" + list.join("\n"));
 	}
+}
+
+
+function addIdentifierExporter() {
+  document.getElementById("pageTitle").innerHTML += `<button id="exportButton">Export identifiers</button>`;
+  document.getElementById("exportButton").onclick = () => {
+	let data = $(".card-footer small").get().map(e => e.textContent.split(", "));
+
+	let html = `<table>
+	<tr>
+		<th>Name</th>
+		<th>Identifier</th>
+	</tr>`;
+	for (let [name, code] of data) {
+		html += `
+		<tr>
+			<td>${name}</td>
+			<td>${code}</td>
+		</tr>`;
+	}
+	html += `</table>`;
+
+	var wnd = window.open("about:blank", "", "_blank");
+	wnd.document.write(html);
+
+  }
+}
+
+function addCheckinClearer() {
+  document.getElementById("pageTitle").innerHTML += `<button id="clearCheckins">Clear all</button>`;
+  document.getElementById("clearCheckins").onclick = () => {
+	[...document.querySelectorAll("button.btn-secondary")].filter(e => e.textContent == "☓ All").forEach(e => e.click())
+
+  }
 }
