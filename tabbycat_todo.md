@@ -20,3 +20,7 @@
 - Release draw to the public without releasing judge allocation
 - Clear cache immediately when certain changes are made (like motion/draw/results release)
 - Clear All button on check-in status screen
+- Diversity overview:
+	+ Only color Regions that have members
+	+ Option to hide Regions with no members
+	+ Maybe a few more colors
