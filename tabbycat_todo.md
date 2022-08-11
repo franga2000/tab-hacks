@@ -24,3 +24,4 @@
 	+ Only color Regions that have members
 	+ Option to hide Regions with no members
 	+ Maybe a few more colors
+- Optionally require a secret code to check in (useful for online tournaments - you share the code in the main call, so people can't check in without being present)
