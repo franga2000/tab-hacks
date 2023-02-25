@@ -5,6 +5,7 @@
 - Critical crash when ell emojis are used
 	+ Because the emoji allocator considers all used emojis, not just in the current tournament, this happens with many archived tournaments
 - When using password ballots, trainees are shown on the public page, but then taken to the chair's ballot
+- Draw display prevents page orientation change (
 - Ballot edit goes to old form, but switching between versions goes to new one
 - Intermediate 1/2 draw generation errors don't properly explain the issue (which teams fell through and what needs to be done about it)
 	+ it should also be possible to override the error
