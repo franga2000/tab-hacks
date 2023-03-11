@@ -2,17 +2,18 @@
 
 ## Bugs
 
-- Critical crash when ell emojis are used
-	+ Because the emoji allocator considers all used emojis, not just in the current tournament, this happens with many archived tournaments
+- ~~Critical crash when ell emojis are used~~
+	+ ~~Because the emoji allocator considers all used emojis, not just in the current tournament, this happens with many archived tournaments~~
 - When using password ballots, trainees are shown on the public page, but then taken to the chair's ballot
-- Draw display prevents page orientation change (
+- Sorting on draw page doesn't work (very dangerous when sorted by rank!)
+- Draw display prevents page orientation change when printing
 - Ballot edit goes to old form, but switching between versions goes to new one
 - Intermediate 1/2 draw generation errors don't properly explain the issue (which teams fell through and what needs to be done about it)
 	+ it should also be possible to override the error
 - Personal links "view ballot" doesn't always show the viewing judge's ballot (in case of multiple judges)
 - Can't submit a judge with `institution=None` via API
 - Ballot status chart doesn't show confirmed ballots (maybe only when using split ballots and merging?)
-- Copy as CSV button doesn't work
+- ~~Copy as CSV button doesn't work~~
 
 ## Wishlist
 
