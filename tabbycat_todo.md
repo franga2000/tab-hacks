@@ -21,6 +21,8 @@
 	+ Option to copy sides from another round
 	+ Option to reverse sides
 - API for side allocations
+- On the break elegibility screen, show the number of speakers next to the number of speakers in a category (e.g. ESL Speakers: 2/4)
+	+ maybe additionally mark those where all are in a category 
 - Show team's previous sides on draw editing screen
 - Release draw to the public without releasing judge allocation
 - Clear cache immediately when certain changes are made (like motion/draw/results release)
