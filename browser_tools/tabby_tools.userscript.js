@@ -14,6 +14,16 @@
 GM_registerMenuCommand('Make tables plain', () => plainTables(document), 'r');
 
 
+{
+  let $style = document.createElement("style");
+  $style.innerHTML = `
+table .form-check-input {
+  scale: 1.6;
+}
+  `;
+  document.head.append($style);
+}
+
 /*
  * WHERE TO RUN WHAT
  */
@@ -31,6 +41,10 @@ if (window.location.href.includes("/checkins/identifiers/print/")) {
 
 if (window.location.href.includes("/checkins/status/")) {
 	addCheckinClearer()
+}
+
+if (window.location.href.endsWith("/break/eligibility/")) {
+  GM_registerMenuCommand('Add team member count', () => addTeamSizes(document), 'r');
 }
 
 /*
@@ -51,7 +65,16 @@ function reverseTitle() {
  * Strip anything fancy out of a table so it's easier to copy-paste
  */
 function plainTables(el) {
-	[...el.querySelectorAll("td")].forEach(e => e.innerHTML = e.children[0].textContent)
+	[...el.querySelectorAll("td")].forEach(e => {
+    let txt;
+    let span = e.querySelector("span");
+    if (span) {
+      txt = span.textContent;
+    } else {
+      txt = e.children[0].textContent;
+    }
+    e.innerHTML = txt
+  })
 }
 
 /**
@@ -66,7 +89,7 @@ function addBatchToggler() {
 	  <textarea class="form-control" id="batch-toggle-list"></textarea>
 	  <div class="input-group-append" id="batch-toggle"><span class="input-group-text">GO</span></div>
 	</div>`;
-  
+
 	document.getElementById("batch-toggle").onclick = function(ev) {
 	  let cat_num = 1;
 	  let list = document.getElementById("batch-toggle-list").value.split("\n").map(s => s.trim());
@@ -118,5 +141,16 @@ function addCheckinClearer() {
   document.getElementById("clearCheckins").onclick = () => {
 	[...document.querySelectorAll("button.btn-secondary")].filter(e => e.textContent == "☓ All").forEach(e => e.click())
 
+  }
+}
+
+function addTeamSizes() {
+  for (let $team of document.querySelectorAll(".team-name")) {
+    let members = $team.querySelector(".list-group-item > span").textContent;
+    let count = members.split(",").length;
+    $team.querySelector(".flex-vertical-center [data-toggle]").style.flex = "1";
+    let $count = document.createElement("span");
+    $count.textContent = "(" + count + ")";
+    $team.querySelector(".flex-vertical-center").append($count);
   }
 }
