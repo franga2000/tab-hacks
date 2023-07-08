@@ -5,6 +5,7 @@
 - ~~Critical crash when ell emojis are used~~
 	+ ~~Because the emoji allocator considers all used emojis, not just in the current tournament, this happens with many archived tournaments~~
 - When using password ballots, trainees are shown on the public page, but then taken to the chair's ballot
+- Info slide display (for projection) isn't auto-sized like the motion is
 - Sorting on draw page doesn't work (very dangerous when sorted by rank!)
 - Draw display prevents page orientation change when printing
 - Ballot edit goes to old form, but switching between versions goes to new one
