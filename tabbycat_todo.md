@@ -14,6 +14,7 @@
 - Personal links "view ballot" doesn't always show the viewing judge's ballot (in case of multiple judges)
 - Can't submit a judge with `institution=None` via API
 - Ballot status chart doesn't show confirmed ballots (maybe only when using split ballots and merging?)
+- Doing something in the drag&drop editor (like side confirmation) and immediately pressing Back (or the back arrow) doesn't save the changes
 - ~~Copy as CSV button doesn't work~~
 
 ## Wishlist
