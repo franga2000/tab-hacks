@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name				Tabbycat tools
 // @match			 http*://tab*.*/*
+// // @match			 http*://test.tab.debate.si/*
 // @grant			 unsafeWindow
 // @grant			 GM_registerMenuCommand
 // @version		 1.0
@@ -13,14 +14,25 @@
  */
 GM_registerMenuCommand('Make tables plain', () => plainTables(document), 'r');
 
+/*
+ * GLOBAL STYLES
+ */
 
 {
   let $style = document.createElement("style");
   $style.innerHTML = `
+
+/* big checkboxes */
 table .form-check-input {
   scale: 1.6;
 }
-  `;
+
+/* block banner ad */
+#pageTitle > .col-md:last-child {
+  display: none;
+}
+
+`;
   document.head.append($style);
 }
 
@@ -47,9 +59,32 @@ if (window.location.href.endsWith("/break/eligibility/")) {
   GM_registerMenuCommand('Add team member count', () => addTeamSizes(document), 'r');
 }
 
+if (!window.location.href.includes("/admin")) {
+  hideAds()
+}
+
+if (window.location.href.includes("conflicts/adjudicator-institution/")) {
+  searchableConflicts()
+}
+
 /*
  * ACTUAL CODE
  */
+
+/**
+ * Hide ads on the frontend.
+ * NOTE: while I understand the choice to run ads and don't have too much of a problem withparticipants
+ * participants seeing them when looking at the public pages on their own, I do not feel comfortable displaying
+ * these ads when projecting my screen to the crowd at a tournament.
+ * This script is made for use by tabmasters, not participants, so they're not the target audience anyways.
+ */
+function hideAds() {
+  for (let $img of document.getElementsByTagName("img")) {
+    if ($img.src.includes("promotion")) {
+      $img.remove();
+    }
+  }
+}
 
 /**
  * Reverse the title so they're more readable in short tabs that get truncated
@@ -152,5 +187,16 @@ function addTeamSizes() {
     let $count = document.createElement("span");
     $count.textContent = "(" + count + ")";
     $team.querySelector(".flex-vertical-center").append($count);
+  }
+}
+
+/**
+ * Append the value of every dropdown to its label, so it becomes CTRL+F searchable.Append
+ * Useful when you need to find a specific person in a long list of auto-generated conflicts.
+ */
+function searchableConflicts() {
+  for (let $sel of document.querySelectorAll("select")) {
+    let $lab = $sel.parentElement.querySelector("label");
+    $lab.textContent += " (" + $sel.options[$sel.selectedIndex].text + ")";
   }
 }
