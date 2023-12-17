@@ -36,6 +36,7 @@
 - Optionally require a secret code to check in (useful for online tournaments - you share the code in the main call, so people can't check in without being present)
 - Ability to export participant data including identifiers
 - Editing room priority on admin listing page
+- Timezone display is ambiguous (e.g. "debates start at 09:25 (in Australia/Melbourne)")
 
 # Look into
  - is it possible to disable the default question in feedback? 
