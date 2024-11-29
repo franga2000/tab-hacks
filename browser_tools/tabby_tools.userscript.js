@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name				Tabbycat tools
 // @match			 http*://tab*.*/*
-// // @match			 http*://test.tab.debate.si/*
+// @match			 http*://*.calicotab.com/*
 // @grant			 unsafeWindow
 // @grant			 GM_registerMenuCommand
 // @version		 1.0
@@ -40,7 +40,7 @@ table .form-check-input {
  * WHERE TO RUN WHAT
  */
 
-//reverseTitle();
+reverseTitle();
 
 if (window.location.href.endsWith("/participants/eligibility/")) {
 	addBatchToggler()
@@ -61,6 +61,10 @@ if (window.location.href.endsWith("/break/eligibility/")) {
 
 if (!window.location.href.includes("/admin")) {
   hideAds()
+}
+
+if (window.location.href.includes("/database")) {
+  warnNoTournamentFilter()
 }
 
 if (window.location.href.includes("conflicts/adjudicator-institution/")) {
@@ -198,5 +202,15 @@ function searchableConflicts() {
   for (let $sel of document.querySelectorAll("select")) {
     let $lab = $sel.parentElement.querySelector("label");
     $lab.textContent += " (" + $sel.options[$sel.selectedIndex].text + ")";
+  }
+}
+
+/**
+ * Make it obvious when a participants page in the admin isn't filtered by tournament.
+ * This is to ensure you don't accidentally run a batch action on all participants instead of just the current tournament.
+ */
+function warnNoTournamentFilter() {
+  if (window.location.href.includes("/participants/") && ! window.location.href.includes("tournament__id")) {
+    document.getElementById("content").style.backgroundColor = "rgba(255, 0, 0, .2)"
   }
 }
