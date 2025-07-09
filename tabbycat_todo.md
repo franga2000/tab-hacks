@@ -19,6 +19,9 @@
 
 ## Wishlist
 
+- Bulk admin actions for
+        + Set tournament inactive
+- Make sorting tournaments easier 
 - Editing preallocated sides form frontend
 	+ Option to copy sides from another round
 	+ Option to reverse sides
