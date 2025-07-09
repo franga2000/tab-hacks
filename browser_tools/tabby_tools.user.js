@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name				Tabbycat tools
-// @match			 http*://tab*.*/*
-// @match			 http*://*.calicotab.com/*
+// @match			 http://tab*.*/*
+// @match			 https://tab*.*/*
+// @match			 https://*.calicotab.com/*
 // @grant			 unsafeWindow
 // @grant			 GM_registerMenuCommand
 // @version		 1.0
