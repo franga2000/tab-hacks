@@ -44,6 +44,7 @@
 - Editing room priority on admin listing page
 - Timezone display is ambiguous (e.g. "debates start at 09:25 (in Australia/Melbourne)")
 - Full institution name tooltip when hovering on short name (e.g. check-in status page)
+- Don't hide the current round draw on the public page when "Release team tab" is enabled
 - Show all feedback on one page (equity wants to read through all of it)
 
 # Look into
